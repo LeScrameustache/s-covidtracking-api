@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule
+	xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd 
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<http:listener-config
+		name="s-covidtracking-api-httpListenerConfig">
+		<http:listener-connection host="${http.host}"
+			port="${http.port}" readTimeout="${http.timeout}"/>
+	</http:listener-config>
+	<apikit:config name="s-covidtracking-api-config"
+		api="s-covidtracking-api.raml"
+		outboundHeadersMapName="outboundHeaders"
+		httpStatusVarName="httpStatus" />
+	<global-property doc:name="Global Property" doc:id="b6c4fb26-a414-4a1c-8bc6-bb7c77107e91" name="mule.env" value="dev" />
+	<configuration-properties doc:name="Configuration properties" doc:id="5f7c4909-8b14-42c2-87e7-030150aee1f4" file="env/${mule.env}.yaml" />
+	<http:request-config name="Covidtracking_HTTP_Request_Configuration" doc:name="HTTP Request configuration" doc:id="722943fb-165e-403e-b7ab-fe173e8842a8" basePath="${covidtracking.basePath}">
+		<http:request-connection protocol="${covidtracking.protocol}" host="${covidtracking.host}" />
+	</http:request-config>
+
+
+</mule>

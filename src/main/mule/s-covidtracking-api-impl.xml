@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd ">
+	<flow name="get:\getAll:s-covidtracking-api-config">
+		<http:request method="GET" doc:name="Request" doc:id="3bf1c746-8158-4056-b5ab-81c82f071a04" config-ref="Covidtracking_HTTP_Request_Configuration" path="us/daily.json"/>
+	</flow>
+	<flow name="get:\getState\(state):s-covidtracking-api-config">
+		<ee:transform doc:name="Transform Message">
+			<ee:variables>
+				<ee:set-variable variableName="state">attributes.uriParams.'state'
+				</ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<http:request method="GET" doc:name="Request" doc:id="43a561ad-0708-4b09-bef2-0a86507d22a4" config-ref="Covidtracking_HTTP_Request_Configuration" path='#["states/" ++ vars.state ++ "/current.json"]' />
+		<error-handler >
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="e2bd483e-9b99-412b-b05a-7e090cfcaff5" type="HTTP:NOT_FOUND">
+				<ee:transform doc:name="Transform Message" doc:id="1dc0ae2a-4816-447e-a5fc-21afd2d582af" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+read(error.exception.errorMessage.payload as String, 'application.json')]]></ee:set-payload>
+					</ee:message>
+					<ee:variables >
+						<ee:set-variable variableName="httpStatus" ><![CDATA[404]]></ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+				<logger level="ERROR" doc:name="Logger" doc:id="1547d460-eb71-42a0-9892-8436bf82bb63" message='#["Invalid State : " ++ vars.state]'/>
+			</on-error-continue>
+		</error-handler>
+	</flow>
+</mule>

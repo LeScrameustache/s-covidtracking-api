@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="s-covidtracking-api-main-test-suite.xml" />
+	<munit:test name="s-covidtracking-api-mainTest_APIKIT:NOT_FOUND" doc:id="d606f1f4-c0bc-4194-85b8-4923e270f5b5" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="e9a51d44-f13a-4ac1-b205-4252617a39fb" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="s-covidtracking-api-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:BAD_REQUEST" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to s-covidtracking-api-main" doc:id="28630b9d-ca8a-4467-9a1e-fec3e1068339" name="s-covidtracking-api-main"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="88cb2d6e-bb07-4d3d-8eea-e8efb99c3926" actual="#[vars.httpStatus]" expected="400"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="s-covidtracking-api-Test_APIKIT:BAD_REQUEST" doc:id="6057bc08-b5e9-4880-8c0f-cc3fd5da1ba6" description="Test" expectedErrorType="APIKIT:BAD_REQUEST" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="5da3a714-2bc6-42e9-9004-3d6e67b16ec3" processor="apikit:router" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="s-covidtracking-api-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:BAD_REQUEST" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to s-covidtracking-api-main" doc:id="9262bf28-27db-450c-ba1c-60dc599b9793" name="s-covidtracking-api-main" />
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="2b6d4148-9b13-4234-b930-faced3f51942" actual="#[vars.httpStatus]" expected="400" />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="s-covidtracking-api-mainTest_APIKIT:METHOD_NOT_ALLOWED" doc:id="f48b112a-cfd4-4a8c-a59d-cda8e5a75515" description="Test" expectedErrorType="APIKIT:METHOD_NOT_ALLOWED" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="47d6bd0f-0535-449c-89cb-9ba1e878a6e4" processor="apikit:router" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="s-covidtracking-api-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:METHOD_NOT_ALLOWED" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to s-covidtracking-api-main" doc:id="0ebfaade-f85e-4c4b-a245-ca918d9b177a" name="s-covidtracking-api-main" />
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="ca730743-ecf8-4f48-bd70-b8b39640c4e1" actual="#[vars.httpStatus]" expected="405" />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="s-covidtracking-api-mainTest_APIKIT:NOT_ACCEPTABLE" doc:id="f4c76d13-a4d0-4c6f-9f2a-47462d7e778d" description="Test" expectedErrorType="APIKIT:NOT_ACCEPTABLE" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="044c8d50-2739-480c-89b0-b81d0b9c71f6" processor="apikit:router" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="s-covidtracking-api-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:NOT_ACCEPTABLE" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to s-covidtracking-api-main" doc:id="c32e5830-1ec6-4916-b620-687a9cda7f2e" name="s-covidtracking-api-main" />
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="cc2854f1-97e4-4e47-88f3-b4e3f66aee6c" actual="#[vars.httpStatus]" expected="406" />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="s-covidtracking-api-main_APIKIT:UNSUPPORTED_MEDIA_TYPE" doc:id="e4f78af0-b540-4812-a213-b454a6301466" description="Test" expectedErrorType="APIKIT:UNSUPPORTED_MEDIA_TYPE" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="aef1bb73-c0cd-4e12-82b2-6036ad7041d5" processor="apikit:router" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="s-covidtracking-api-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:UNSUPPORTED_MEDIA_TYPE" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to s-covidtracking-api-main" doc:id="93981aab-a858-439a-ad4e-89295193ecdd" name="s-covidtracking-api-main" />
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="c2eb5b76-0710-4253-8056-f6b9c345c409" actual="#[vars.httpStatus]" expected="415" />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="s-covidtracking-api-mainTest_APIKIT:NOT_IMPLEMENTED" doc:id="3c24effd-2534-4904-97d1-b1828962ec9c" description="Test" expectedErrorType="APIKIT:NOT_IMPLEMENTED" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="2cac23e0-3f5b-4b59-b986-193e42b238e3" processor="apikit:router" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="s-covidtracking-api-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:NOT_IMPLEMENTED" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to s-covidtracking-api-main" doc:id="d8d308fa-ae67-45b1-b338-6c102e0af523" name="s-covidtracking-api-main" />
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="7ba6a261-9c94-4574-9ade-a50181df5ea6" actual="#[vars.httpStatus]" expected="501" />
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

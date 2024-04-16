@@ -1,0 +1,28 @@
+#%RAML 1.0
+title: s-covidtracking-api
+
+uses:
+  lib: library/library.raml
+
+/getAll:
+  is: [lib.security]
+  type:
+    lib.get:
+      get-description: "Get all data from the external covid tracking api"
+      get-type: object[]
+      get-example: !include examples/getAll.raml
+
+/getState:
+  /{state}:
+    is: [lib.security]
+    uriParameters:
+      state:
+        description: "The state from wich we are retreiving the data."
+        pattern: ^[a-z]{2}$
+        example: "ca"
+    type:
+      lib.get:
+        get-description: "Get the data about the specified state from the external covid tracking api"
+        get-type: object
+        get-example: !include examples/getByState.raml
+  

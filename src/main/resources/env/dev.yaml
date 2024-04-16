@@ -1,0 +1,13 @@
+environement:
+  name: 'dev'
+
+http:
+  host: 'localhost'
+  port: '8081'
+  timeout: '600000'
+  
+covidtracking:
+  protocol: 'HTTPS'
+  host: 'api.covidtracking.com'
+  basePath: '/v1/'
+  
