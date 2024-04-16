@@ -23,7 +23,7 @@
 			<flow-ref doc:name="Flow-ref to s-covidtracking-api-main" doc:id="28630b9d-ca8a-4467-9a1e-fec3e1068339" name="s-covidtracking-api-main"/>
 		</munit:execution>
 		<munit:validation >
-			<munit-tools:assert-equals doc:name="Assert equals" doc:id="88cb2d6e-bb07-4d3d-8eea-e8efb99c3926" actual="#[vars.httpStatus]" expected="400"/>
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="88cb2d6e-bb07-4d3d-8eea-e8efb99c3926" actual="#[vars.httpStatus]" expected="404"/>
 		</munit:validation>
 	</munit:test>
 	<munit:test name="s-covidtracking-api-Test_APIKIT:BAD_REQUEST" doc:id="6057bc08-b5e9-4880-8c0f-cc3fd5da1ba6" description="Test" expectedErrorType="APIKIT:BAD_REQUEST" >
